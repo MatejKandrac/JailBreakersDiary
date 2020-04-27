@@ -1,14 +1,42 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
-
-group 'org.jailbreakers'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    
+    compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.4'
+    compile "org.openjfx:javafx-base:13.0.2:win"
+    compile "org.openjfx:javafx-controls:13.0.2:win"
+    compile "org.openjfx:javafx-fxml:13.0.2:win"
+    compile "org.openjfx:javafx-graphics:13.0.2:win"
+}
+
+mainClassName = 'org.jailbreakers.Launcher'
+
+javafx {
+    version = '13.0.2'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+run {
+    jvmArgs = [
+            "--add-exports=javafx.graphics/com.sun.javafx.scene=com.jfoenix",
+    ]
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': mainClassName
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
