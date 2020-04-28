@@ -3,6 +3,7 @@ package org.jailbreakers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,7 +17,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login_layout.fxml"));
-        primaryStage.setScene(new Scene(loader.load()));
+        Scene sc = new Scene(loader.load());
+//        sc.getStylesheets().add(getClass().getResource("/css/login_style.css").toExternalForm());
+        Font.loadFont(getClass().getResource("/style/Montserrat-Regular.ttf").toExternalForm(),20);
+        primaryStage.setScene(sc);
         primaryStage.setTitle("Diary - JailBreakers");
         primaryStage.show();
     }
