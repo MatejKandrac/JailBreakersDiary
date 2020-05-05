@@ -76,7 +76,7 @@
    <bottom>
       <Label styleClass="copyright_text" text="© by Jailbreakers team" BorderPane.alignment="CENTER_RIGHT">
          <BorderPane.margin>
-            <Insets right="20.0" />
+            <Insets right="5.0" />
          </BorderPane.margin>
       </Label>
    </bottom>

@@ -6,11 +6,14 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.4'
-//    compile group: 'de.jensd', name: 'fontawesomefx-materialicons', version: '2.2.0-9.1.2'
+    compile group: 'de.jensd', name: 'fontawesomefx-materialicons', version: '2.2.0-9.1.2'
+    compile group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-9.1.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
     compile "org.openjfx:javafx-base:13.0.2:win"
     compile "org.openjfx:javafx-controls:13.0.2:win"
     compile "org.openjfx:javafx-fxml:13.0.2:win"
