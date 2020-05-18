@@ -45,7 +45,7 @@
                                     <Insets left="30.0" right="30.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <Button defaultButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" styleClass="field_button_sign_in" text="Log in">
+                              <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" styleClass="field_button_sign_in" text="Log in">
                                  <VBox.margin>
                                     <Insets top="20.0" />
                                  </VBox.margin>
@@ -80,4 +80,7 @@
          </BorderPane.margin>
       </Label>
    </bottom>
+   <top>
+      <AnchorPane fx:id="stageTop" prefHeight="30.0" BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>

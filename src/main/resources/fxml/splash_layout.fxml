@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="451.0" prefWidth="550.0" stylesheets="@../style/splash_style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jailbreakers.ui.splash.SplashController">
+   <children>
+      <ImageView fitHeight="507.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/connecting.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="TOP_CENTER" layoutX="275.0" layoutY="313.0">
+         <children>
+            <Label fx:id="connectingLabel" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <HBox fx:id="buttonsParent" alignment="TOP_CENTER" prefWidth="180.0" spacing="10.0">
+               <children>
+                  <Button fx:id="retryButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Retry" />
+                  <Button fx:id="skipButton" defaultButton="true" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Skip">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="loadingGif" fitHeight="90.0" fitWidth="126.0" layoutX="303.0" layoutY="245.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/loading.gif" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

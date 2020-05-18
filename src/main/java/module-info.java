@@ -3,6 +3,9 @@ module JailBreakersDiary {
     exports org.jailbreakers.obj;
     exports org.jailbreakers.ui.authentication;
     opens org.jailbreakers;
+    opens org.jailbreakers.ui.authentication;
+    opens org.jailbreakers.ui.splash;
+    opens org.jailbreakers.ui.stagetop;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
