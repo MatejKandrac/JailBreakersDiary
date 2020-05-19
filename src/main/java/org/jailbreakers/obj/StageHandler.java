@@ -1,5 +1,7 @@
 package org.jailbreakers.obj;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -53,4 +55,6 @@ public class StageHandler {
     public void setMinimized(){
         stage.setIconified(true);
     }
+
+    public ReadOnlyDoubleProperty getStageWidthProperty(){return stage.widthProperty();}
 }
