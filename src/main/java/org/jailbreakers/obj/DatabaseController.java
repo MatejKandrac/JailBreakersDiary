@@ -36,7 +36,27 @@ public class DatabaseController {
         connectingThread.setDaemon(true);
         connectingThread.start();
     }
+    public void login() {
 
+
+    }
+    public void register(String email, String pass, String confirmPass){
+        if(pass.equals(confirmPass)){
+            try {
+                Statement stm = connection.createStatement();
+                String sql = "insert into users "
+                        + "(email, pass) "
+                        + "values (
+                        + email + ", " + pass
+                        + ")";
+                stm.executeUpdate(sql);
+            } catch (SQLException e ) {
+                JDBCTutorialUtilities.printSQLException(e);
+            } finally {
+                if (stmt != null) { stmt.close(); }
+            }
+        }
+    }
     public void abortConnection(){
         if (connectingThread.isAlive())
             connectingThread.stop();
