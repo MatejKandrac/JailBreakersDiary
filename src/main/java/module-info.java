@@ -7,6 +7,7 @@ module JailBreakersDiary {
     opens org.jailbreakers.ui.splash;
     opens org.jailbreakers.ui.stagetop;
     opens org.jailbreakers.ui.register;
+    opens org.jailbreakers.ui.dialog;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

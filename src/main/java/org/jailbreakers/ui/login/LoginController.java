@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import org.jailbreakers.obj.Layout;
 import org.jailbreakers.obj.StageHandler;
+import org.jailbreakers.ui.dialog.AlertDialog;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,11 +33,11 @@ public class LoginController implements Initializable{
         LoginViewModel viewModel = new LoginViewModel();
 
         loginButton.setOnAction(event -> {
-            try {
-                StageHandler.getInstance().setScene(Layout.MAIN);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                StageHandler.getInstance().setScene(Layout.MAIN);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 //            viewModel.login(usernameField.getText(), passwordField.getText());
         });
 
