@@ -1,10 +1,10 @@
 package org.jailbreakers.obj;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,9 +15,10 @@ public class StageHandler {
     private Stage stage;
     private static StageHandler instance;
 
-    private StageHandler(){}
+    private StageHandler() {
+    }
 
-    public void setStage(Stage stage){
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
@@ -31,13 +32,22 @@ public class StageHandler {
         URL resPath = layout.getResourceByLayout();
         FXMLLoader loader = new FXMLLoader(resPath);
         Scene scene = new Scene(loader.load());
-        if (scene.getRoot() instanceof BorderPane){
+        if (scene.getRoot() instanceof BorderPane) {
             BorderPane root = (BorderPane) scene.getRoot();
             for (int i = 0; i < root.getChildren().size(); i++) {
-                if (root.getChildren().get(i).getId() != null){
-                    if (root.getChildren().get(i).getId().equals("stageTop")){
-                        FXMLLoader stageTop = new FXMLLoader(getClass().getResource("/fxml/stage_top.fxml"));
-                        root.getChildren().set(i, stageTop.load());
+                if (root.getChildren().get(i).getId() != null) {
+                    if (root.getChildren().get(i).getId().equals("stageTop")) {
+                        FXMLLoader stageTop = new FXMLLoader(Layout.STAGE_TOP.getResourceByLayout());
+                        root.setTop(stageTop.load());
+                    } else if (root.getChildren().get(i).getId().equals("leftSide")) {
+                        VBox left = (VBox) root.getChildren().get(i);
+                        for (int i1 = 0; i1 < left.getChildren().size(); i1++) {
+                            if (left.getChildren().get(i1) != null)
+                                if (left.getChildren().get(i1).getId().equals("datepicker")) {
+                                    FXMLLoader datePicker = new FXMLLoader(Layout.DATE_PICKER.getResourceByLayout());
+                                    left.getChildren().set(i1, datePicker.load());
+                                }
+                        }
                     }
                 }
             }
@@ -47,14 +57,16 @@ public class StageHandler {
         stage.show();
     }
 
-    public void setStagePosition(double x, double y){
+    public void setStagePosition(double x, double y) {
         stage.setX(x);
         stage.setY(y);
     }
 
-    public void setMinimized(){
+    public void setMinimized() {
         stage.setIconified(true);
     }
 
-    public ReadOnlyDoubleProperty getStageWidthProperty(){return stage.widthProperty();}
+    public ReadOnlyDoubleProperty getStageWidthProperty() {
+        return stage.widthProperty();
+    }
 }

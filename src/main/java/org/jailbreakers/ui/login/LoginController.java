@@ -32,11 +32,11 @@ public class LoginController implements Initializable{
         LoginViewModel viewModel = new LoginViewModel();
 
         loginButton.setOnAction(event -> {
-//            try {
-//                StageHandler.getInstance().setScene(Layout.MAIN);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                StageHandler.getInstance().setScene(Layout.MAIN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 //            viewModel.login(usernameField.getText(), passwordField.getText());
         });
 

@@ -1,9 +1,19 @@
 .jfx-toggle-node {
 	-fx-background-radius: 20;
-	-jfx-toggle-color: red;
+	-jfx-toggle-color: pink;
 }
+
 .jfx-toggle-node .jfx-rippler{
 	-jfx-rippler-fill: pink;
+}
+
+.otherMonthDay {
+	-fx-text-fill: #797979;
+	-fx-opacity: 0.2;
+}
+
+.unselectedDay {
+	-fx-text-fill: #797979;
 }
 
 .jfx-button {
