@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import org.jailbreakers.obj.Layout;
 import org.jailbreakers.obj.StageHandler;
-import org.jailbreakers.ui.dialog.AlertDialog;
 
 import java.io.IOException;
 import java.net.URL;
