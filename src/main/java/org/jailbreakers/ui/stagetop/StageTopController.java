@@ -68,5 +68,6 @@ public class StageTopController implements Initializable {
         });
         stageHandler.getStageWidthProperty().addListener((observable, oldValue, newValue) ->
                 space.setPrefWidth(newValue.doubleValue() - windowEventParent.getWidth() - titleParent.getWidth() - 30));
+//        space.setPrefWidth(stageHandler.getStageWidthProperty().get() - windowEventParent.getWidth() - titleParent.getWidth() - 200);
     }
 }

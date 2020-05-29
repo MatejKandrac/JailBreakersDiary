@@ -1,4 +1,4 @@
-package org.jailbreakers.ui.authentication;
+package org.jailbreakers.ui.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -16,7 +16,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable{
 
-
+    @FXML
+    private Button registerButton;
     @FXML
     private ImageView loadingGif;
     @FXML
@@ -37,6 +38,14 @@ public class LoginController implements Initializable{
                 e.printStackTrace();
             }
 //            viewModel.login(usernameField.getText(), passwordField.getText());
+        });
+
+        registerButton.setOnAction(event -> {
+            try {
+                StageHandler.getInstance().setScene(Layout.REGISTER);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         loadingGif.visibleProperty().bind(viewModel.loadingProperty());
