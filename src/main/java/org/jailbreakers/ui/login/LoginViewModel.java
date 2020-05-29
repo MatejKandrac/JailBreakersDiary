@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import org.jailbreakers.obj.DatabaseController;
 
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class LoginViewModel {
 
@@ -32,7 +31,6 @@ public class LoginViewModel {
             registerError.setValue("Something went wrong");
             exception.printStackTrace();
         }
-
     }
 
     public SimpleBooleanProperty loadingProperty() {

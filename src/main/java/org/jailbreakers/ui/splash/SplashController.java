@@ -53,6 +53,7 @@ public class SplashController implements Initializable {
             setRetryVisible(false);
         });
 
+        skipButton.setDisable(true);
         skipButton.setOnAction(event -> {
             viewModel.cancelConnection();
             goToLogin();
