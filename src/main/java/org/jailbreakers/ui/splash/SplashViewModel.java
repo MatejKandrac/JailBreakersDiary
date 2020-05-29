@@ -13,10 +13,11 @@ public class SplashViewModel {
 
     SplashViewModel(){
         controller = DatabaseController.getInstance();
-        connectionStatus = new SimpleStringProperty("Connecting...");
+        connectionStatus = new SimpleStringProperty();
     }
 
     void connectToDatabase(){
+        connectionStatus.setValue("Connecting...");
         controller.connect(new ConnectionEvent() {
             @Override
             public void onConnect() {

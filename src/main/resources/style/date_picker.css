@@ -1,0 +1,11 @@
+.jfx-toggle-node {
+	-fx-background-radius: 20;
+	-jfx-toggle-color: red;
+}
+.jfx-toggle-node .jfx-rippler{
+	-jfx-rippler-fill: pink;
+}
+
+.jfx-button {
+	-fx-background-radius: 0;
+}
