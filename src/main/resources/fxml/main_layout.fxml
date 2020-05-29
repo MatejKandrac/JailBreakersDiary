@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="575.0" prefWidth="335.0" BorderPane.alignment="CENTER">
@@ -24,7 +23,7 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: pink;" BorderPane.alignment="CENTER">
          <children>
-            <Label text="17" textFill="WHITE">
+            <Label fx:id="dayLabel" text="17" textFill="WHITE">
                <font>
                   <Font size="60.0" />
                </font>
@@ -32,12 +31,12 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Label text="December" textFill="WHITE">
+            <Label fx:id="monthLabel" text="December" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <JFXTextArea focusColor="WHITE" prefHeight="427.0" promptText="How was your day?" style="-fx-prompt-text-fill: white; -fx-border-color: white;" unFocusColor="WHITE">
+            <JFXTextArea fx:id="notesTextArea" focusColor="WHITE" prefHeight="427.0" promptText="How was your day?" style="-fx-prompt-text-fill: white; -fx-border-color: white;" unFocusColor="WHITE">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
