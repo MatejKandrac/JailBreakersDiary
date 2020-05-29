@@ -3,6 +3,7 @@ package org.jailbreakers.obj;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseController {
 
@@ -44,16 +45,14 @@ public class DatabaseController {
         if(pass.equals(confirmPass)){
             try {
                 Statement stm = connection.createStatement();
-                String sql = "insert into users "
-                        + "(email, pass) "
-                        + "values (
-                        + email + ", " + pass
-                        + ")";
-                stm.executeUpdate(sql);
+//                String sql = "insert into users "
+//                        + "(email, pass) "
+//                        + "values ("
+//                        + email + ", " + pass
+//                        + ")";
+//                stm.executeUpdate(sql);
             } catch (SQLException e ) {
-                JDBCTutorialUtilities.printSQLException(e);
-            } finally {
-                if (stmt != null) { stmt.close(); }
+                e.printStackTrace();
             }
         }
     }

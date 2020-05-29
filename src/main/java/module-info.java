@@ -1,11 +1,12 @@
 module JailBreakersDiary {
     exports org.jailbreakers;
     exports org.jailbreakers.obj;
-    exports org.jailbreakers.ui.authentication;
+    exports org.jailbreakers.ui.login;
     opens org.jailbreakers;
-    opens org.jailbreakers.ui.authentication;
+    opens org.jailbreakers.ui.login;
     opens org.jailbreakers.ui.splash;
     opens org.jailbreakers.ui.stagetop;
+    opens org.jailbreakers.ui.register;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

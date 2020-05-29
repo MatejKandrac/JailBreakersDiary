@@ -1,4 +1,4 @@
-package org.jailbreakers.ui.authentication;
+package org.jailbreakers.ui.login;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import org.jailbreakers.obj.DatabaseController;
