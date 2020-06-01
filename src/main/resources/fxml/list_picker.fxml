@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="325.0" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton fx:id="upButton" focusTraversable="false" prefHeight="30.0" style="-fx-background-radius: 0;">
+         <graphic>
+            <MaterialIconView glyphName="EXPAND_LESS" size="30" />
+         </graphic>
+      </JFXButton>
+      <VBox fx:id="listParent" alignment="TOP_CENTER" prefHeight="150.0" />
+      <JFXButton fx:id="downButton" focusTraversable="false" prefHeight="30.0" style="-fx-background-radius: 0;">
+         <graphic>
+            <MaterialIconView glyphName="EXPAND_MORE" size="30" />
+         </graphic>
+      </JFXButton>
+      <HBox fx:id="buttonsParent" alignment="CENTER_RIGHT" prefHeight="60.0" spacing="10.0">
+         <children>
+            <JFXButton fx:id="closeButton" focusTraversable="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0;" text="Close" />
+            <JFXButton fx:id="confirmButton" focusTraversable="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0;" text="Confirm" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets top="30.0" />
+   </padding>
+</fx:root>

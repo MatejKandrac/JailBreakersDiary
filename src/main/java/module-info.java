@@ -2,7 +2,12 @@ module JailBreakersDiary {
     exports org.jailbreakers;
     exports org.jailbreakers.obj;
     exports org.jailbreakers.ui.login;
+    exports org.jailbreakers.ui.main;
+    exports org.jailbreakers.ui.listpicker;
+    exports org.jailbreakers.ui.datepicker;
     opens org.jailbreakers;
+    opens org.jailbreakers.ui.listpicker;
+    opens org.jailbreakers.ui.datepicker;
     opens org.jailbreakers.ui.login;
     opens org.jailbreakers.ui.splash;
     opens org.jailbreakers.ui.stagetop;
