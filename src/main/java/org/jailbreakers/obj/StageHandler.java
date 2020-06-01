@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jailbreakers.ui.datepicker.DatePickerController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +15,7 @@ public class StageHandler {
 
     private Stage stage;
     private static StageHandler instance;
-
+    private DatePickerController.OnDatePickedListener onDatePickedListener;
     private StageHandler() {
     }
 
@@ -66,7 +67,16 @@ public class StageHandler {
         stage.setIconified(true);
     }
 
+
     public ReadOnlyDoubleProperty getStageWidthProperty() {
         return stage.widthProperty();
+    }
+
+    public DatePickerController.OnDatePickedListener getOnDatePickedListener() {
+        return onDatePickedListener;
+    }
+
+    public void setOnDatePickedListener(DatePickerController.OnDatePickedListener onDatePickedListener) {
+        this.onDatePickedListener = onDatePickedListener;
     }
 }

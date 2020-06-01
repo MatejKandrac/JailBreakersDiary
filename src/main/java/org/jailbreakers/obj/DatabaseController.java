@@ -1,28 +1,24 @@
 package org.jailbreakers.obj;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
- * DatabaseController singleton class is used for handling database events.
+ * <h1>DatabaseController singleton class is used for handling database events.</h1>
  *
- * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
- * @version 1.0
- * @since 29.5.2020
- *
- * Class should not handle exceptions after connecting but instead view models should handle them.
- * Class is maintained by Martin Ragan and he is responsible for its functionality.
- *
- * An instance of class is only one (singleton concept), that's why constructor is private to prevent new instance creation.
+ * <p>Class should not handle exceptions after connecting but instead view models should handle them.<br>
+ * Class is maintained by <B>Martin Ragan</B> and he is responsible for its functionality.<br>
+ *<br>
+ * An instance of class is only one (singleton concept), that's why constructor is private to prevent new instance creation.<br>
  * Method {@link #getInstance()} returns instance of DatabaseController and creates new one if no instance
- * was created. This method ensures that any other class can get an instance of only one {@link #connection}.
- * Class has only one Connection object which is used until closed with {@link #abortConnection()} method.
+ * was created. This method ensures that any other class can get an instance of only one {@link #connection}.<br>
+ * Class has only one Connection object which is used until closed with {@link #abortConnection()} method.<br>
  *
  * {@link #connectingThread} , {@link #loggingInThread} and {@link #registerThread} threads are threads which handle
  * asynchronous events of database. In our case login, register and connect. Threads are canceled if {@link #abortConnection()}
- * method is called.
+ * method is called.</p>
+ * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
+ * @version 1.0
+ * @since 29.5.2020
  */
 
 public class DatabaseController {
@@ -33,6 +29,7 @@ public class DatabaseController {
     private Thread connectingThread;
     private Thread loggingInThread;
     private Thread registerThread;
+    public User user;
 
     private DatabaseController() {
     }
@@ -48,7 +45,9 @@ public class DatabaseController {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://db80.websupport.sk:3314/ufih4ysx?serverTimezone=CET", "ufih4ysx", "Gi6|-?#26q");
+                        "jdbc:mysql://localhost:3306/jailbreakersdiary?serverTimezone=CET",
+                        "jailbreakersclient",
+                        "jailbreakersapp");
                 if (event != null)
                     event.onConnect();
             } catch (Exception e) {
@@ -62,8 +61,27 @@ public class DatabaseController {
 
     public void login(String email, String pass) throws SQLException, IllegalStateException {
         //If user was not found: throw new IllegalStateException("User was not found");
-    }
+        Statement stm = connection.createStatement();
+        String sql = "select * from users inner join notes n on users.id_user = n.id_user where email ='" + email + "' and pass = md5('" + pass + "');";
+        ResultSet rs = stm.executeQuery(sql);
+        if (rs != null) {
+            if (rs.next()){
+                String id = rs.getString("id_user");
+                String emailData = rs.getString("email");
+                String passData = rs.getString("pass");
+                String idNote = rs.getString("id_note");
+                String content = rs.getString("content");
+                Note note = new Note(idNote, content);
+                user = new User(id, emailData, passData, note);
+                System.out.println(emailData); // bunciho reakcia ma dostala teraz :D :D pocuj idem spat potrebujes ma na daco? :D
+                // no a co treba? xddddddd
+            }
+            // teraz ho routnut do toho scenu nooo ckj ckj to ti pomozem
 
+            else
+                throw new IllegalStateException("user not found");
+        }
+    }
     /**
      * Creates a new user in database.
      * Note that exceptions are not handled in method and are instead thrown.
@@ -89,8 +107,15 @@ public class DatabaseController {
         stm.executeUpdate(sql);
     }
 
+    public void updateNotes(String notes) throws SQLException{
+        Statement stm = connection.createStatement();
+        System.out.println(notes);
+        String sql = "update notes set content ='" + notes + "' where id_note = '"
+                + user.getNote().getUid() + "'";
+        stm.executeUpdate(sql);
+    }
     /**
-     * Aborts connection in the database and stops all running threads used be DatabaseController
+     * Aborts connection in the database and stops all running threads used by DatabaseController
      * Method checks for all living threads and stops them. It also closes the Connection of the database
      * Closing of connection is handled in controller because it does not have to be handled inside view models.
      */

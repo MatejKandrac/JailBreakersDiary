@@ -13,6 +13,7 @@ import java.net.URL;
 import java.time.YearMonth;
 import java.util.*;
 
+import org.jailbreakers.obj.StageHandler;
 import org.jailbreakers.ui.listpicker.*;
 
 public class DatePickerController implements Initializable, DayItem.OnDaySelected {
@@ -45,7 +46,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
             {"January", "February", "March", "April", "May", "June", "July",
                     "August", "September", "October", "November", "December"};
     private int currentMonth, currentYear, currentDay;
-
+    // hmm tak urobim update poznamok tak ono spra.... ckj ckj sak ja ti to narychlo spravim
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dateParent = pickerParent;
@@ -129,7 +130,8 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
 
     private void setDay(int day) {
         currentDay = day;
-        System.out.println("SETTING DAY TO: " + currentDay);
+        StageHandler handler = StageHandler.getInstance();
+        handler.getOnDatePickedListener().onDatePicked(currentYear, currentMonth, currentDay);
         for (Node child : daysLayout.getChildren()) {
             if (child instanceof DayItem){
                 DayItem item = (DayItem) child;
@@ -190,5 +192,9 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
     @Override
     public void onDaySelected(int positionInMonth) {
         setDay(positionInMonth);
+    }
+
+    public interface OnDatePickedListener{
+        void onDatePicked(int year, int month, int day);
     }
 }

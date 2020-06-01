@@ -6,12 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import org.jailbreakers.obj.DatabaseController;
 import org.jailbreakers.obj.Layout;
 import org.jailbreakers.obj.StageHandler;
-import org.jailbreakers.ui.dialog.AlertDialog;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -33,6 +34,13 @@ public class LoginController implements Initializable{
         LoginViewModel viewModel = new LoginViewModel();
 
         loginButton.setOnAction(event -> {
+            try {
+                DatabaseController.getInstance().login(usernameField.getText(), passwordField.getText());
+                StageHandler handler = StageHandler.getInstance();
+                handler.setScene(Layout.MAIN); //Takto sa otvaraju nove okna
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
 //            try {
 //                StageHandler.getInstance().setScene(Layout.MAIN);
 //            } catch (IOException e) {
