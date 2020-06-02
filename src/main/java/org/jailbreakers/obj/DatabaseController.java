@@ -60,7 +60,6 @@ public class DatabaseController {
     }
 
     public void login(String email, String pass) throws SQLException, IllegalStateException {
-        //If user was not found: throw new IllegalStateException("User was not found");
         Statement stm = connection.createStatement();
         String sql = "select * from users inner join notes n on users.id_user = n.id_user where email ='" + email + "' and pass = md5('" + pass + "');";
         ResultSet rs = stm.executeQuery(sql);
@@ -73,10 +72,8 @@ public class DatabaseController {
                 String content = rs.getString("content");
                 Note note = new Note(idNote, content);
                 user = new User(id, emailData, passData, note);
-                System.out.println(emailData); // bunciho reakcia ma dostala teraz :D :D pocuj idem spat potrebujes ma na daco? :D
-                // no a co treba? xddddddd
+                System.out.println(emailData);
             }
-            // teraz ho routnut do toho scenu nooo ckj ckj to ti pomozem
 
             else
                 throw new IllegalStateException("user not found");

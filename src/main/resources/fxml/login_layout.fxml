@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="560.0" prefWidth="1115.0" styleClass="root" stylesheets="@../style/login_style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jailbreakers.ui.login.LoginController">
+<BorderPane prefHeight="560.0" prefWidth="1115.0" styleClass="root" stylesheets="@../style/login_style.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jailbreakers.ui.login.LoginController">
    <center>
       <AnchorPane prefHeight="560.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <HBox prefHeight="474.0" prefWidth="1115.0">

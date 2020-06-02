@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -68,18 +69,21 @@ public class AlertDialog extends VBox{
     }
 
     public void setNeutralButton(String text, DialogInterface dialogInterface){
+        negativeButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
         neutralButton.setVisible(true);
         neutralButton.setText(text);
         neutralButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, NEUTRAL_BUTTON));
     }
 
     public void setPositiveButton(String text, DialogInterface dialogInterface){
+        negativeButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
         positiveButton.setVisible(true);
         positiveButton.setText(text);
         positiveButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, POSITIVE_BUTTON));
     }
 
     public void setNegativeButton(String text, DialogInterface dialogInterface){
+        negativeButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
         negativeButton.setVisible(true);
         negativeButton.setText(text);
         negativeButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, NEGATIVE_BUTTON));

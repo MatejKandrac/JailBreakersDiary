@@ -1,0 +1,81 @@
+/**
+    colors:
+        Aquamarine -    #98dbc6
+        Turquoise -     #5bc8ac
+        Canary Yellow - #e6d72a
+        Pink Tulip -    #f18d9e
+ */
+
+.root {
+    -fx-background-color: white;
+}
+
+.field_parent {
+    -fx-background-color: #f18d9e;
+    -fx-effect: dropshadow(two-pass-box, black, 20, 0.15, 1, 1);
+    -fx-background-radius: 5;
+}
+
+.field_title_text {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+}
+
+.field_child:focused {
+    -fx-prompt-text-fill: #e7d883;
+}
+
+.field_child {
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: #e6d72a;
+    -fx-font-size: 15;
+}
+
+.title_text {
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+}
+
+.copyright_text {
+    -fx-text-fill: gray;
+}
+
+.field_button_sign_up {
+    -fx-background-radius: 20;
+    -fx-background-color: #e6d72a;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+}
+
+.field_button_sign_up:pressed {
+    -fx-background-radius: 20;
+    -fx-background-color: #9a901d;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+}
+
+.field_button_back {
+    -fx-background-color: #f18d9e;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-color: white;
+}
+
+.field_button_back:pressed {
+    -fx-background-color: #c27283;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-color: white;
+}
+
+.error-label{
+    -fx-text-fill: red;
+    -fx-font-size: 10;
+}

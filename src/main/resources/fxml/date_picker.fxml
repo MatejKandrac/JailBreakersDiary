@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jailbreakers.ui.datepicker.DatePickerController">
+<Pane fx:id="root" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jailbreakers.ui.datepicker.DatePickerController">
    <children>
       <VBox fx:id="pickerParent" alignment="TOP_CENTER" stylesheets="@../style/date_picker.css">
           <children>

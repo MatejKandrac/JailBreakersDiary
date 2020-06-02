@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import org.jailbreakers.obj.EmailUsedValidator;
 import org.jailbreakers.obj.Layout;
+import org.jailbreakers.obj.PasswordValidator;
 import org.jailbreakers.obj.StageHandler;
 
 import java.io.IOException;
@@ -31,7 +33,15 @@ public class RegisterController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         RegisterViewModel viewModel = new RegisterViewModel();
         loadingGif.setVisible(false);
-        registerButton.setOnAction(event -> viewModel.register(usernameField.getText(), passwordField.getText(), confirmPasswordField.getText()));
+        registerButton.setOnAction(event -> {
+            usernameField.validate();
+            PasswordValidator.passwordText = passwordField.getText();
+            passwordField.validate();
+            confirmPasswordField.validate();
+            if (!noErrors())
+                viewModel.register(usernameField.getText(), passwordField.getText());
+        });
+
         backButton.setOnAction(event -> {
             try {
                 StageHandler.getInstance().setScene(Layout.LOGIN);
@@ -42,6 +52,27 @@ public class RegisterController implements Initializable {
 
         viewModel.registerErrorProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println(newValue);
+            if (newValue.equals("Email is used")){
+                EmailUsedValidator.isEmailUsed = true;
+                usernameField.validate();
+            }
+//            AlertDialog dialog = new AlertDialog(registerButton.getScene().getWindow());
+//            dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
+//            dialog.setTitle("Error");
+//            dialog.setMessage(newValue);
+//            dialog.show();
         });
+
+        viewModel.successfulRegisterProperty().addListener((observable, oldValue, newValue) -> {
+            EmailUsedValidator.isEmailUsed = false;
+            usernameField.validate();
+            System.out.println("Register successful");
+        });
+    }
+
+    private boolean noErrors(){
+        return usernameField.getActiveValidator() != null ||
+                passwordField.getActiveValidator() != null ||
+                confirmPasswordField.getActiveValidator() != null;
     }
 }

@@ -1,12 +1,10 @@
 package org.jailbreakers.ui.splash;
 
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.jailbreakers.obj.Layout;
@@ -23,63 +21,51 @@ public class SplashController implements Initializable {
     private Button retryButton;
 
     @FXML
-    private Label connectingLabel;
-
-    @FXML
-    private Button skipButton;
+    private Button closeButton;
 
     @FXML
     private HBox buttonsParent;
 
+    @FXML
+    private Label connectingLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SplashViewModel viewModel = new SplashViewModel();
 
-        setRetryVisible(false);
+        buttonsParent.setVisible(false);
 
         connectingLabel.textProperty().bind(viewModel.connectionStatusProperty());
 
         viewModel.connectionStatusProperty().addListener((observable, oldValue, newValue) -> {
+            connectingLabel.textProperty().bind(observable);
             if (newValue.equals("Successfully connected.")) {
                 goToLogin();
             } else if (newValue.equals("Unable to connect. Try again later")) {
-                setRetryVisible(true);
+                buttonsParent.setVisible(true);
             }
         });
 
         retryButton.setOnAction(event -> {
             viewModel.connectToDatabase();
-            setRetryVisible(false);
+            buttonsParent.setVisible(false);
         });
 
-        skipButton.setDisable(true);
-        skipButton.setOnAction(event -> {
-            viewModel.cancelConnection();
-            goToLogin();
-        });
+        closeButton.setOnAction(event -> System.exit(0));
 
         viewModel.connectToDatabase();
     }
 
     private void goToLogin() {
-        try {
-            StageHandler.getInstance().setScene(Layout.LOGIN);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setRetryVisible(boolean visibility) {
-        if (visibility) {
-            retryButton.setVisible(true);
-            retryButton.setPrefWidth(85);
-            buttonsParent.setSpacing(10);
-        } else {
-            retryButton.setVisible(false);
-            retryButton.setPrefWidth(0);
-            buttonsParent.setSpacing(0);
-        }
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished(event -> {
+            try {
+                StageHandler.getInstance().setScene(Layout.LOGIN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        delay.play();
     }
 
 }

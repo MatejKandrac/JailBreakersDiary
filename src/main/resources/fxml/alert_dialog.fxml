@@ -7,20 +7,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="255.0" spacing="10.0" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="250.0" spacing="10.0" type="VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="title">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="message" alignment="TOP_LEFT" prefHeight="119.0" prefWidth="234.0" wrapText="true" />
+      <Label fx:id="message" alignment="TOP_LEFT" wrapText="true" />
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <JFXButton fx:id="neutralButton" />
-            <JFXButton fx:id="negativeButton" />
-            <JFXButton fx:id="positiveButton" />
+            <JFXButton fx:id="neutralButton" visible="false" prefWidth="0" />
+            <JFXButton fx:id="negativeButton" visible="false" prefWidth="0" />
+            <JFXButton fx:id="positiveButton" visible="false" prefWidth="0" />
          </children>
       </HBox>
    </children>

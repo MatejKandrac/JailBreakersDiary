@@ -1,37 +1,48 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
+sourceCompatibility = 11
+targetCompatibility = 11
+
 repositories {
     mavenCentral()
     jcenter()
 }
 
-dependencies {
-    compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.4'
-    compile group: 'de.jensd', name: 'fontawesomefx-materialicons', version: '2.2.0-9.1.2'
-    compile group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-9.1.2'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
-    compile "org.openjfx:javafx-base:13.0.2:win"
-    compile "org.openjfx:javafx-controls:13.0.2:win"
-    compile "org.openjfx:javafx-fxml:13.0.2:win"
-    compile "org.openjfx:javafx-graphics:13.0.2:win"
-}
-
-mainClassName = 'org.jailbreakers.Launcher'
-
 javafx {
-    version = '13.0.2'
+    version = '11'
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
-run {
-    jvmArgs = [
-            "--add-exports=javafx.graphics/com.sun.javafx.scene=com.jfoenix",
-    ]
+dependencies {
+    def currentOs = "win"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        print("WINDOWS OS DETECTED")
+        currentOs = "win"
+    }
+    else if (Os.isFamily(Os.FAMILY_MAC)) {
+        print("MAC OS DETECTED")
+        currentOs = "mac"
+    }
+    else if (Os.isFamily(Os.FAMILY_UNIX)){
+        print("UNIX OS DETECTED")
+        currentOs = "linux"
+    }
+    compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.9'
+    compile group: 'de.jensd', name: 'fontawesomefx-materialicons', version: '2.2.0-9.1.2'
+    compile group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-9.1.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+    compile "org.openjfx:javafx-base:${javafx.version}:${currentOs}"
+    compile "org.openjfx:javafx-controls:${javafx.version}:${currentOs}"
+    compile "org.openjfx:javafx-fxml:${javafx.version}:${currentOs}"
+    compile "org.openjfx:javafx-graphics:${javafx.version}:${currentOs}"
 }
+
+mainClassName = 'org.jailbreakers.Launcher'
 
 jar {
     manifest {
