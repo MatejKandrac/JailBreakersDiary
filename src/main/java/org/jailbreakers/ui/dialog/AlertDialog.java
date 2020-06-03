@@ -31,10 +31,12 @@ public class AlertDialog extends VBox{
     @FXML
     private JFXButton positiveButton;
     private Stage windowStage;
+    private Stage ownerStage;
 
     private static final int NEUTRAL_BUTTON = 0, POSITIVE_BUTTON = 1, NEGATIVE_BUTTON = 2;
 
     public AlertDialog(Window window){
+        this.ownerStage = (Stage) window;
         windowStage = new Stage();
         windowStage.initModality(Modality.WINDOW_MODAL);
         windowStage.initOwner(window);
@@ -53,10 +55,12 @@ public class AlertDialog extends VBox{
     }
 
     public void show(){
+        ownerStage.setOpacity(0.9);
         windowStage.show();
     }
 
     public void dismiss(){
+        ownerStage.setOpacity(1);
         windowStage.close();
     }
 

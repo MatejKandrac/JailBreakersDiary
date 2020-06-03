@@ -11,28 +11,25 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class RegisterViewModel {
 
     private DatabaseController databaseController;
-    private SimpleStringProperty registerError;
     private SimpleBooleanProperty successfulRegister,
-            emailUsed;
+            emailUsed, registerError;
 
     public RegisterViewModel() {
-        registerError = new SimpleStringProperty();
+        registerError = new SimpleBooleanProperty();
         successfulRegister = new SimpleBooleanProperty();
         emailUsed = new SimpleBooleanProperty();
         databaseController = DatabaseController.getInstance();
     }
 
     void register(String email, String pass) {
+        System.out.println("REGISTERING");
         try {
             databaseController.register(email, pass);
             successfulRegister.setValue(true);
         } catch (SQLIntegrityConstraintViolationException exception) {
             emailUsed.setValue(true);
-        } catch (CommunicationsException exception) {
-            registerError.setValue("Error connecting to server");
         } catch (SQLException exception) {
-            registerError.setValue("Something went wrong");
-            exception.printStackTrace();
+            registerError.setValue(true);
         }
     }
 
@@ -44,7 +41,7 @@ public class RegisterViewModel {
         return successfulRegister;
     }
 
-    public SimpleStringProperty registerErrorProperty() {
+    public SimpleBooleanProperty registerErrorProperty() {
         return registerError;
     }
 }

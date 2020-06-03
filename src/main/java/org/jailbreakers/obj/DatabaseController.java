@@ -30,6 +30,7 @@ public class DatabaseController {
     private Thread loggingInThread;
     private Thread registerThread;
     public User user;
+    private String loggedUserUuid;
 
     private DatabaseController() {
     }
@@ -61,18 +62,19 @@ public class DatabaseController {
 
     public void login(String email, String pass) throws SQLException, IllegalStateException {
         Statement stm = connection.createStatement();
-        String sql = "select * from users inner join notes n on users.id_user = n.id_user where email ='" + email + "' and pass = md5('" + pass + "');";
+        String sql = "select * from users where email ='" + email + "' and pass = md5('" + pass + "');";
         ResultSet rs = stm.executeQuery(sql);
         if (rs != null) {
             if (rs.next()){
-                String id = rs.getString("id_user");
-                String emailData = rs.getString("email");
-                String passData = rs.getString("pass");
-                String idNote = rs.getString("id_note");
-                String content = rs.getString("content");
-                Note note = new Note(idNote, content);
-                user = new User(id, emailData, passData, note);
-                System.out.println(emailData);
+                loggedUserUuid = rs.getString("id_user");
+//                String id = rs.getString("id_user");
+//                String emailData = rs.getString("email");
+//                String passData = rs.getString("pass");
+//                String idNote = rs.getString("id_note");
+//                String content = rs.getString("content");
+//                Note note = new Note(idNote, content);
+//                user = new User(id, emailData, passData, note);
+//                System.out.println(emailData);
             }
 
             else
@@ -102,6 +104,7 @@ public class DatabaseController {
                 + email + "', md5('" + pass
                 + "'))";
         stm.executeUpdate(sql);
+        login(email, pass);
     }
 
     public void updateNotes(String notes) throws SQLException{
@@ -119,7 +122,7 @@ public class DatabaseController {
 
     public void abortConnection() {
         if (connectingThread.isAlive())
-            connectingThread.stop();
+            connectingThread.interrupt();
         if (connection != null) {
             try {
                 connection.close();

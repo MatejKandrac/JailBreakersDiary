@@ -42,11 +42,11 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
     private ListPicker listPicker;
     private VBox dateParent;
     private final Calendar calendar = Calendar.getInstance();
-    private final String[] monthNames = new String[]
+    public static final String[] monthNames = new String[]
             {"January", "February", "March", "April", "May", "June", "July",
                     "August", "September", "October", "November", "December"};
-    private int currentMonth, currentYear, currentDay;
-    // hmm tak urobim update poznamok tak ono spra.... ckj ckj sak ja ti to narychlo spravim
+    private int currentMonth, currentYear, currentDay, shownMonth, shownYear;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dateParent = pickerParent;
@@ -56,7 +56,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
             List<Object> list = new ArrayList<>();
             for (int i = 1; i <= calendar.get(Calendar.YEAR); i++)
                 list.add(i);
-            listPicker = new ListPicker(list, currentYear - 1, new ListPicker.ListPickerEvent() {
+            listPicker = new ListPicker(list, shownYear - 1, new ListPicker.ListPickerEvent() {
                 @Override
                 public void onPicked(int position) {
                     setYear(position + 1, true);
@@ -78,10 +78,10 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         monthPicker.setOnAction(event -> {
 
             listPicker = new ListPicker(
-                    currentYear == calendar.get(Calendar.YEAR) ?
+                    shownYear == calendar.get(Calendar.YEAR) ?
                             Arrays.copyOf(monthNames, calendar.get(Calendar.MONTH) + 1) :
                             monthNames,
-                    currentMonth, new ListPicker.ListPickerEvent() {
+                    shownMonth, new ListPicker.ListPickerEvent() {
                 @Override
                 public void onPicked(int position) {
                     setMonth(position);
@@ -100,29 +100,29 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
             });
             root.getChildren().set(0, listPicker.getView());
         });
-        monthPrevious.setOnAction(event -> setMonth(currentMonth - 1));
-        monthNext.setOnAction(event -> setMonth(currentMonth + 1));
+        monthPrevious.setOnAction(event -> setMonth(shownMonth - 1));
+        monthNext.setOnAction(event -> setMonth(shownMonth + 1));
     }
 
     private void setMonth(int month) {
         if (month == -1) {
-            setYear(currentYear - 1, false);
-            currentMonth = 11;
+            setYear(shownYear - 1, false);
+            shownMonth = 11;
         } else if (month == 12) {
-            setYear(currentYear + 1, false);
-            currentMonth = 0;
+            setYear(shownYear + 1, false);
+            shownMonth = 0;
         } else
-            currentMonth = month;
-        monthPicker.setText(monthNames[currentMonth]);
+            shownMonth = month;
+        monthPicker.setText(monthNames[shownMonth]);
         //noinspection MagicConstant
-        monthNext.setDisable(currentMonth == calendar.get(Calendar.MONTH) && currentYear == calendar.get(Calendar.YEAR));
+        monthNext.setDisable(shownMonth == calendar.get(Calendar.MONTH) && shownYear == calendar.get(Calendar.YEAR));
         updateDays();
     }
 
     private void setYear(int year, boolean updateDays) {
-        currentYear = year;
-        yearPicker.setText(String.valueOf(currentYear));
-        if (calendar.get(Calendar.MONTH) < currentMonth && currentYear == calendar.get(Calendar.YEAR))
+        shownYear = year;
+        yearPicker.setText(String.valueOf(shownYear));
+        if (calendar.get(Calendar.MONTH) < shownMonth && shownYear == calendar.get(Calendar.YEAR))
             setMonth(calendar.get(Calendar.MONTH));
         else if(updateDays)
             updateDays();
@@ -130,8 +130,10 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
 
     private void setDay(int day) {
         currentDay = day;
+        currentMonth = shownMonth;
+        currentYear = shownYear;
         StageHandler handler = StageHandler.getInstance();
-        handler.getOnDatePickedListener().onDatePicked(currentYear, currentMonth, currentDay);
+        handler.getOnDatePickedListener().onDatePicked(shownYear, shownMonth, currentDay);
         for (Node child : daysLayout.getChildren()) {
             if (child instanceof DayItem){
                 DayItem item = (DayItem) child;
@@ -146,12 +148,12 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
             daysLayout.getChildren().remove(7, daysLayout.getChildren().size());
         Thread th = new Thread(() -> {
             Platform.runLater(() -> {
-                YearMonth pastMonth = YearMonth.of(currentYear, currentMonth == 0 ? 12 : currentMonth);
-                YearMonth thisMonth = YearMonth.of(currentYear, (currentMonth + 1) == 12 ? 1 : (currentMonth + 1));
+                YearMonth pastMonth = YearMonth.of(shownYear, shownMonth == 0 ? 12 : shownMonth);
+                YearMonth thisMonth = YearMonth.of(shownYear, (shownMonth + 1) == 12 ? 1 : (shownMonth + 1));
                 Calendar firstDay = Calendar.getInstance();
                 firstDay.set(Calendar.DAY_OF_MONTH, 1);
-                firstDay.set(Calendar.MONTH, currentMonth);
-                firstDay.set(Calendar.YEAR, currentYear);
+                firstDay.set(Calendar.MONTH, shownMonth);
+                firstDay.set(Calendar.YEAR, shownYear);
                 int dayOffset = (firstDay.get(Calendar.DAY_OF_WEEK) - 2) > 1 ?
                         (firstDay.get(Calendar.DAY_OF_WEEK) - 2) :
                         7 - Math.abs(firstDay.get(Calendar.DAY_OF_WEEK) - 2);
@@ -163,13 +165,13 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
                             dayOffset--;
                             daysLayout.add(new DayItem(DayItem.OTHER_MONTH_DAY, pastMonth.lengthOfMonth() - dayOffset, false), column, row);
                         }//TODO SELECT DAY WHICH WAS LAST CHOSEN
-                        else if (dayCounter == currentDay && currentMonth == calendar.get(Calendar.MONTH) && currentYear == calendar.get(Calendar.YEAR)) {
+                        else if (dayCounter == currentDay && shownMonth == currentMonth && shownYear == currentYear) {
                             DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, true);
                             dayItem.setOnClickListener(this);
                             daysLayout.add(dayItem, column, row);
                             dayCounter++;
                         }
-                        else if ((dayCounter <= calendar.get(Calendar.DAY_OF_MONTH)) || (dayCounter <= thisMonth.lengthOfMonth() && (currentMonth < calendar.get(Calendar.MONTH) || currentYear < calendar.get(Calendar.YEAR)))) {
+                        else if ((dayCounter <= calendar.get(Calendar.DAY_OF_MONTH)) || (dayCounter <= thisMonth.lengthOfMonth() && (shownMonth < calendar.get(Calendar.MONTH) || shownYear < calendar.get(Calendar.YEAR)))) {
                             DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, false);
                             dayItem.setOnClickListener(this);
                             daysLayout.add(dayItem, column, row);

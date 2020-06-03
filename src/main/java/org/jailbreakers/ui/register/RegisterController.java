@@ -10,6 +10,7 @@ import org.jailbreakers.obj.EmailUsedValidator;
 import org.jailbreakers.obj.Layout;
 import org.jailbreakers.obj.PasswordValidator;
 import org.jailbreakers.obj.StageHandler;
+import org.jailbreakers.ui.dialog.AlertDialog;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,22 +52,30 @@ public class RegisterController implements Initializable {
         });
 
         viewModel.registerErrorProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-            if (newValue.equals("Email is used")){
-                EmailUsedValidator.isEmailUsed = true;
-                usernameField.validate();
+            if (newValue){
+                AlertDialog dialog = new AlertDialog(registerButton.getScene().getWindow());
+                dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
+                dialog.setTitle("Error");
+                dialog.setMessage("Something went wrong.\nPlease try again later.");
+                dialog.show();
             }
-//            AlertDialog dialog = new AlertDialog(registerButton.getScene().getWindow());
-//            dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
-//            dialog.setTitle("Error");
-//            dialog.setMessage(newValue);
-//            dialog.show();
+            viewModel.registerErrorProperty().setValue(false);
+        });
+
+        viewModel.emailUsedProperty().addListener((observable, oldValue, newValue) -> {
+            EmailUsedValidator.isEmailUsed = true;
+            usernameField.validate();
         });
 
         viewModel.successfulRegisterProperty().addListener((observable, oldValue, newValue) -> {
             EmailUsedValidator.isEmailUsed = false;
             usernameField.validate();
             System.out.println("Register successful");
+            try {
+                StageHandler.getInstance().setScene(Layout.MAIN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
