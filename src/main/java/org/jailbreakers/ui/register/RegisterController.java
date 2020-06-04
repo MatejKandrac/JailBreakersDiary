@@ -30,6 +30,16 @@ public class RegisterController implements Initializable {
     @FXML
     private Button backButton;
 
+    /**
+     * After initialization of class sets listeners on buttons.
+     * {@link #registerButton} action event first validates every input and then calls {@code .register} method with given credentials
+     * {@link #backButton} action event navigates back to login screen.
+     * When error happens during registration {@link AlertDialog} dialog is created and displayed.
+     * When registration is successful user is navigated to main screen.
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         RegisterViewModel viewModel = new RegisterViewModel();
@@ -53,7 +63,7 @@ public class RegisterController implements Initializable {
         loadingGif.visibleProperty().bind(viewModel.loadingProperty());
 
         viewModel.registerErrorProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue){
+            if (newValue) {
                 AlertDialog dialog = new AlertDialog(registerButton.getScene().getWindow());
                 dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
                 dialog.setTitle("Error");
@@ -79,7 +89,7 @@ public class RegisterController implements Initializable {
         });
     }
 
-    private boolean noErrors(){
+    private boolean noErrors() {
         return usernameField.getActiveValidator() != null ||
                 passwordField.getActiveValidator() != null ||
                 confirmPasswordField.getActiveValidator() != null;

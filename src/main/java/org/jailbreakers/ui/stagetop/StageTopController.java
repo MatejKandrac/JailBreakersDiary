@@ -35,23 +35,30 @@ public class StageTopController implements Initializable {
     private double xOffset = 0, yOffset = 0;
     private boolean ignoreMove = false;
 
+    /**
+     * Handles input on window's top bar.
+     * When {@link #minimize} button is clicked window minimizes.
+     * When {@link #close} button is clicked application is closed/exited.
+     * When user drags by {@link #stageTopParent} pane whole window is being moved by mouse.
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         StageHandler stageHandler = StageHandler.getInstance();
         minimize.addEventFilter(MouseEvent.ANY, event -> {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED){
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
                 StageHandler.getInstance().setMinimized();
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
+            } else if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
                 ignoreMove = true;
             else if (event.getEventType() == MouseEvent.MOUSE_RELEASED)
                 ignoreMove = false;
         });
         close.addEventFilter(MouseEvent.ANY, event -> {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED){
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
                 System.exit(0);
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
+            } else if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
                 ignoreMove = true;
             else if (event.getEventType() == MouseEvent.MOUSE_RELEASED)
                 ignoreMove = false;
@@ -63,8 +70,8 @@ public class StageTopController implements Initializable {
         stageTopParent.setOnMouseDragged(event -> {
             if (!ignoreMove)
                 stageHandler.setStagePosition(
-                        event.getScreenX()-xOffset,
-                        event.getScreenY()-yOffset);
+                        event.getScreenX() - xOffset,
+                        event.getScreenY() - yOffset);
         });
         stageHandler.getStageWidthProperty().addListener((observable, oldValue, newValue) ->
                 space.setPrefWidth(newValue.doubleValue() - windowEventParent.getWidth() - titleParent.getWidth() - 30));

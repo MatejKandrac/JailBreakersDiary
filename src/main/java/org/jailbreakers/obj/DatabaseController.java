@@ -124,6 +124,16 @@ public class DatabaseController {
         }
     }
 
+    /**
+     * Saves/updates user's notes.
+     * Note that exceptions are not handled in method and are instead thrown.
+     * Method creates a Statement and executes a simple sql query.
+     *
+     * @param note is text of note itself
+     * @param date is date that note is being saved at
+     * @throws SQLException is thrown during register if sql connection happens to fail
+     */
+
     public void updateNote(String note, String date) throws SQLException {
         Statement stm = connection.createStatement();
         String insertSql;

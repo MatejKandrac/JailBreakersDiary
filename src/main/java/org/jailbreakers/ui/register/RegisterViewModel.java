@@ -20,6 +20,15 @@ public class RegisterViewModel {
         databaseController = DatabaseController.getInstance();
     }
 
+    /**
+     * Passes email and password of user signing up to registration method.
+     * When user pick's email that is used {@link #emailUsed} property is set to true and registration cancelled.
+     * If sql connection fails {@link #registerError} property is set to true and and registration cancelled.
+     *
+     * @param email is email of new user trying to register
+     * @param pass  is password of new user trying to register
+     */
+
     void register(String email, String pass) {
         loading.setValue(true);
         try {
@@ -29,13 +38,12 @@ public class RegisterViewModel {
             emailUsed.setValue(true);
         } catch (SQLException exception) {
             registerError.setValue(true);
-        }
-        finally {
+        } finally {
             loading.setValue(false);
         }
     }
 
-    public SimpleBooleanProperty loadingProperty(){
+    public SimpleBooleanProperty loadingProperty() {
         return loading;
     }
 

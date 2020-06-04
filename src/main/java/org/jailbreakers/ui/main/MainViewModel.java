@@ -15,7 +15,14 @@ public class MainViewModel {
         databaseController = DatabaseController.getInstance();
     }
 
-    void saveNote(String content, String date){
+    /**
+     * Calls {@code .updateNote} method that saves or updates user's notes
+     *
+     * @param content is text of note itself
+     * @param date    is date that note is being saved at
+     */
+
+    void saveNote(String content, String date) {
         try {
             databaseController.updateNote(content, date);
         } catch (SQLException exception) {
@@ -23,7 +30,7 @@ public class MainViewModel {
         }
     }
 
-    void fetchNoteByDate(String date, NoteEventListener listener){
+    void fetchNoteByDate(String date, NoteEventListener listener) {
         try {
             databaseController.fetchNoteByDate(date, listener::onNewNote);
         } catch (SQLException exception) {
@@ -35,7 +42,7 @@ public class MainViewModel {
         return databaseError;
     }
 
-    interface NoteEventListener{
+    interface NoteEventListener {
         void onNewNote(String note);
     }
 }

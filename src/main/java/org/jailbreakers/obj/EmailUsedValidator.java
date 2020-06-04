@@ -9,6 +9,10 @@ public class EmailUsedValidator extends ValidatorBase {
 
     public static boolean isEmailUsed = false;
 
+    /**
+     * Validates if email was already used using {@link #ValidatorBase} class.
+     */
+
     @Override
     protected void eval() {
         if (srcControl.get() instanceof TextInputControl) {

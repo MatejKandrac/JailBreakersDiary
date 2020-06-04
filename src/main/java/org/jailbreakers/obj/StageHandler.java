@@ -16,6 +16,7 @@ public class StageHandler {
     private Stage stage;
     private static StageHandler instance;
     private DatePickerController.OnDatePickedListener onDatePickedListener;
+
     private StageHandler() {
     }
 
@@ -58,11 +59,20 @@ public class StageHandler {
         stage.show();
     }
 
+    /**
+     * Sets stage's position when moved.
+     *
+     * @param x is x coordinate of stage
+     * @param y is x coordinate of stage
+     */
     public void setStagePosition(double x, double y) {
         stage.setX(x);
         stage.setY(y);
     }
 
+    /**
+     * Minimizes stage/window.
+     */
     public void setMinimized() {
         stage.setIconified(true);
     }
