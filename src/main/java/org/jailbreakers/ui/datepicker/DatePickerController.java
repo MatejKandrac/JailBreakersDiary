@@ -65,7 +65,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
 
                 @Override
                 public void onError() {
-
+                    root.getChildren().set(0, dateParent);
                 }
 
                 @Override
@@ -122,9 +122,11 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
     private void setYear(int year, boolean updateDays) {
         shownYear = year;
         yearPicker.setText(String.valueOf(shownYear));
+        if (year < calendar.get(Calendar.YEAR))
+            monthNext.setDisable(false);
         if (calendar.get(Calendar.MONTH) < shownMonth && shownYear == calendar.get(Calendar.YEAR))
             setMonth(calendar.get(Calendar.MONTH));
-        else if(updateDays)
+        else if (updateDays)
             updateDays();
     }
 
@@ -135,7 +137,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         StageHandler handler = StageHandler.getInstance();
         handler.getOnDatePickedListener().onDatePicked(shownYear, shownMonth, currentDay);
         for (Node child : daysLayout.getChildren()) {
-            if (child instanceof DayItem){
+            if (child instanceof DayItem) {
                 DayItem item = (DayItem) child;
                 if (item.getType() == DayItem.SELECTED_DAY && item.getPositionInMonth() != day)
                     item.deselect();
@@ -146,47 +148,43 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
     private void updateDays() {
         if (daysLayout.getChildren().size() > 7)
             daysLayout.getChildren().remove(7, daysLayout.getChildren().size());
-        Thread th = new Thread(() -> {
-            Platform.runLater(() -> {
-                YearMonth pastMonth = YearMonth.of(shownYear, shownMonth == 0 ? 12 : shownMonth);
-                YearMonth thisMonth = YearMonth.of(shownYear, (shownMonth + 1) == 12 ? 1 : (shownMonth + 1));
-                Calendar firstDay = Calendar.getInstance();
-                firstDay.set(Calendar.DAY_OF_MONTH, 1);
-                firstDay.set(Calendar.MONTH, shownMonth);
-                firstDay.set(Calendar.YEAR, shownYear);
-                int dayOffset = (firstDay.get(Calendar.DAY_OF_WEEK) - 2) > 1 ?
-                        (firstDay.get(Calendar.DAY_OF_WEEK) - 2) :
-                        7 - Math.abs(firstDay.get(Calendar.DAY_OF_WEEK) - 2);
-                int dayCounter = 1;
-                int offsetCounter = 1;
-                for (int row = 1; row < 7; row++) {
-                    for (int column = 0; column < 7; column++) {
-                        if (dayOffset > 0) {
-                            dayOffset--;
-                            daysLayout.add(new DayItem(DayItem.OTHER_MONTH_DAY, pastMonth.lengthOfMonth() - dayOffset, false), column, row);
-                        }//TODO SELECT DAY WHICH WAS LAST CHOSEN
-                        else if (dayCounter == currentDay && shownMonth == currentMonth && shownYear == currentYear) {
-                            DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, true);
-                            dayItem.setOnClickListener(this);
-                            daysLayout.add(dayItem, column, row);
-                            dayCounter++;
-                        }
-                        else if ((dayCounter <= calendar.get(Calendar.DAY_OF_MONTH)) || (dayCounter <= thisMonth.lengthOfMonth() && (shownMonth < calendar.get(Calendar.MONTH) || shownYear < calendar.get(Calendar.YEAR)))) {
-                            DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, false);
-                            dayItem.setOnClickListener(this);
-                            daysLayout.add(dayItem, column, row);
-                            dayCounter++;
-                        } else if (dayCounter <= thisMonth.lengthOfMonth()) {
-                            daysLayout.add(new DayItem(DayItem.UNSELECTED_DAY, dayCounter, false), column, row);
-                            dayCounter++;
-                        } else {
-                            daysLayout.add(new DayItem(DayItem.OTHER_MONTH_DAY, offsetCounter, false), column, row);
-                            offsetCounter++;
-                        }
+        Thread th = new Thread(() -> Platform.runLater(() -> {
+            YearMonth pastMonth = YearMonth.of(shownYear, shownMonth == 0 ? 12 : shownMonth);
+            YearMonth thisMonth = YearMonth.of(shownYear, (shownMonth + 1) == 12 ? 1 : (shownMonth + 1));
+            Calendar firstDay = Calendar.getInstance();
+            firstDay.set(Calendar.DAY_OF_MONTH, 1);
+            firstDay.set(Calendar.MONTH, shownMonth);
+            firstDay.set(Calendar.YEAR, shownYear);
+            int dayOffset = (firstDay.get(Calendar.DAY_OF_WEEK) - 2) > 1 ?
+                    (firstDay.get(Calendar.DAY_OF_WEEK) - 2) :
+                    7 - Math.abs(firstDay.get(Calendar.DAY_OF_WEEK) - 2);
+            int dayCounter = 1;
+            int offsetCounter = 1;
+            for (int row = 1; row < 7; row++) {
+                for (int column = 0; column < 7; column++) {
+                    if (dayOffset > 0) {
+                        dayOffset--;
+                        daysLayout.add(new DayItem(DayItem.OTHER_MONTH_DAY, pastMonth.lengthOfMonth() - dayOffset, false), column, row);
+                    } else if (dayCounter == currentDay && shownMonth == currentMonth && shownYear == currentYear) {
+                        DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, true);
+                        dayItem.setOnClickListener(this);
+                        daysLayout.add(dayItem, column, row);
+                        dayCounter++;
+                    } else if ((dayCounter <= calendar.get(Calendar.DAY_OF_MONTH)) || (dayCounter <= thisMonth.lengthOfMonth() && (shownMonth < calendar.get(Calendar.MONTH) || shownYear < calendar.get(Calendar.YEAR)))) {
+                        DayItem dayItem = new DayItem(DayItem.SELECTED_DAY, dayCounter, false);
+                        dayItem.setOnClickListener(this);
+                        daysLayout.add(dayItem, column, row);
+                        dayCounter++;
+                    } else if (dayCounter <= thisMonth.lengthOfMonth()) {
+                        daysLayout.add(new DayItem(DayItem.UNSELECTED_DAY, dayCounter, false), column, row);
+                        dayCounter++;
+                    } else {
+                        daysLayout.add(new DayItem(DayItem.OTHER_MONTH_DAY, offsetCounter, false), column, row);
+                        offsetCounter++;
                     }
                 }
-            });
-        });
+            }
+        }));
         th.setDaemon(true);
         th.start();
     }
@@ -196,7 +194,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         setDay(positionInMonth);
     }
 
-    public interface OnDatePickedListener{
+    public interface OnDatePickedListener {
         void onDatePicked(int year, int month, int day);
     }
 }

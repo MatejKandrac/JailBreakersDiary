@@ -1,8 +1,6 @@
 package org.jailbreakers.ui.register;
 
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import org.jailbreakers.obj.DatabaseController;
 
 import java.sql.SQLException;
@@ -12,9 +10,10 @@ public class RegisterViewModel {
 
     private DatabaseController databaseController;
     private SimpleBooleanProperty successfulRegister,
-            emailUsed, registerError;
+            emailUsed, registerError, loading;
 
     public RegisterViewModel() {
+        loading = new SimpleBooleanProperty(false);
         registerError = new SimpleBooleanProperty();
         successfulRegister = new SimpleBooleanProperty();
         emailUsed = new SimpleBooleanProperty();
@@ -22,7 +21,7 @@ public class RegisterViewModel {
     }
 
     void register(String email, String pass) {
-        System.out.println("REGISTERING");
+        loading.setValue(true);
         try {
             databaseController.register(email, pass);
             successfulRegister.setValue(true);
@@ -31,6 +30,13 @@ public class RegisterViewModel {
         } catch (SQLException exception) {
             registerError.setValue(true);
         }
+        finally {
+            loading.setValue(false);
+        }
+    }
+
+    public SimpleBooleanProperty loadingProperty(){
+        return loading;
     }
 
     public SimpleBooleanProperty emailUsedProperty() {

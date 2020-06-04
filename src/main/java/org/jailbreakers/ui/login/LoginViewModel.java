@@ -1,8 +1,6 @@
 package org.jailbreakers.ui.login;
 
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import org.jailbreakers.obj.DatabaseController;
 
 import java.sql.SQLException;
@@ -10,12 +8,13 @@ import java.sql.SQLException;
 public class LoginViewModel {
 
     private DatabaseController controller;
-    private SimpleBooleanProperty loading;
-    private SimpleStringProperty registerError;
+    private SimpleBooleanProperty loading, loginError, serverError, successfulLogin;
 
     LoginViewModel(){
         controller = DatabaseController.getInstance();
-        registerError = new SimpleStringProperty();
+        serverError = new SimpleBooleanProperty();
+        loginError = new SimpleBooleanProperty();
+        successfulLogin = new SimpleBooleanProperty();
         loading = new SimpleBooleanProperty(false);
     }
 
@@ -23,17 +22,29 @@ public class LoginViewModel {
         loading.setValue(true);
         try {
             controller.login(name, password);
+            successfulLogin.setValue(true);
         } catch (IllegalStateException exception){
-            registerError.setValue("Could not log you in");
-        } catch (CommunicationsException exception){
-            registerError.setValue("Error connecting to server");
-        } catch (SQLException exception) {
-            registerError.setValue("Something went wrong");
-            exception.printStackTrace();
+            loginError.setValue(true);
+        } catch (SQLException exception){
+            serverError.setValue(true);
+        } finally {
+            loading.setValue(false);
         }
     }
 
     public SimpleBooleanProperty loadingProperty() {
         return loading;
+    }
+
+    public SimpleBooleanProperty loginErrorProperty() {
+        return loginError;
+    }
+
+    public SimpleBooleanProperty serverErrorProperty() {
+        return serverError;
+    }
+
+    public SimpleBooleanProperty successfulLoginProperty() {
+        return successfulLogin;
     }
 }

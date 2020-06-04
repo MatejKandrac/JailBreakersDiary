@@ -74,3 +74,15 @@
     -fx-border-width: 1;
     -fx-border-color: white;
 }
+
+.warning_icon{
+    -fx-fill: -icons-color;
+    -glyph-size: 12px;
+    -glyph-name: "WARNING";
+    -icons-color: red;
+}
+
+.error-label{
+    -fx-text-fill: red;
+    -fx-font-size: 10;
+}

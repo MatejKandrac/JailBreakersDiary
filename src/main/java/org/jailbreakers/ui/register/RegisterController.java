@@ -33,7 +33,6 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         RegisterViewModel viewModel = new RegisterViewModel();
-        loadingGif.setVisible(false);
         registerButton.setOnAction(event -> {
             usernameField.validate();
             PasswordValidator.passwordText = passwordField.getText();
@@ -50,6 +49,8 @@ public class RegisterController implements Initializable {
                 e.printStackTrace();
             }
         });
+
+        loadingGif.visibleProperty().bind(viewModel.loadingProperty());
 
         viewModel.registerErrorProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue){
@@ -70,7 +71,6 @@ public class RegisterController implements Initializable {
         viewModel.successfulRegisterProperty().addListener((observable, oldValue, newValue) -> {
             EmailUsedValidator.isEmailUsed = false;
             usernameField.validate();
-            System.out.println("Register successful");
             try {
                 StageHandler.getInstance().setScene(Layout.MAIN);
             } catch (IOException e) {
