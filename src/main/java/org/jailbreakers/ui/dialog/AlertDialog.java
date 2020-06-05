@@ -33,8 +33,11 @@ public class AlertDialog extends VBox{
     private Stage windowStage;
     private Stage ownerStage;
 
-    private static final int NEUTRAL_BUTTON = 0, POSITIVE_BUTTON = 1, NEGATIVE_BUTTON = 2;
+    private static final int NEUTRAL_BUTTON = 0;
 
+    /**
+     * <h1>If connection with database fails, this class will create pop-up window, that informs user with the failure</h1>
+     */
     public AlertDialog(Window window){
         this.ownerStage = (Stage) window;
         windowStage = new Stage();
@@ -77,20 +80,6 @@ public class AlertDialog extends VBox{
         neutralButton.setVisible(true);
         neutralButton.setText(text);
         neutralButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, NEUTRAL_BUTTON));
-    }
-
-    public void setPositiveButton(String text, DialogInterface dialogInterface){
-        negativeButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
-        positiveButton.setVisible(true);
-        positiveButton.setText(text);
-        positiveButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, POSITIVE_BUTTON));
-    }
-
-    public void setNegativeButton(String text, DialogInterface dialogInterface){
-        negativeButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
-        negativeButton.setVisible(true);
-        negativeButton.setText(text);
-        negativeButton.setOnAction(event -> dialogInterface.onDialogButtonClick(this, NEGATIVE_BUTTON));
     }
 
     public interface DialogInterface{
