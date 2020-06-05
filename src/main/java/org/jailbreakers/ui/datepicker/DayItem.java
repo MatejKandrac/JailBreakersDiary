@@ -14,6 +14,10 @@ public class DayItem extends VBox {
     private int type;
     private boolean deselecting = false;
 
+    /**
+     * <h1>This class is structure of an object which represents one day in our calendar system - DatePicker </h1>
+     */
+
     DayItem(int type, int positionInMonth, boolean isCurrent) {
         super();
         this.positionInMonth = positionInMonth;
