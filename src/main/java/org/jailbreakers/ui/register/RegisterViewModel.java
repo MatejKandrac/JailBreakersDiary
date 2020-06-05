@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
- * <h1>ViewModel of {@link RegisterController} class handles most of logic in register window. Also operates with
+ * <h1>ViewModel of {@link RegisterController} class handles most of logic in register view. Also operates with
  * {@link DatabaseController}.</h1>
  * ViewModel holds various of Properties which are data bound to views in {@link RegisterController} and
  * {@link DatabaseController} singleton instance.<br>

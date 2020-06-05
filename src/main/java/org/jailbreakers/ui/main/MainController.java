@@ -41,11 +41,14 @@ public class MainController implements Initializable, DatePickerController.OnDat
         });
 
         viewModel.databaseErrorProperty().addListener((observable, oldValue, newValue) -> {
-            AlertDialog dialog = new AlertDialog(save.getScene().getWindow());
-            dialog.setTitle("Error");
-            dialog.setMessage("Server could not be contacted.\nPlease try again later.");
-            dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
-            dialog.show();
+            if (newValue){
+                AlertDialog dialog = new AlertDialog(save.getScene().getWindow());
+                dialog.setTitle("Error");
+                dialog.setMessage("Server could not be contacted.\nPlease try again later.");
+                dialog.setNeutralButton("Close", (dialog1, button) -> dialog1.dismiss());
+                dialog.show();
+            }
+            viewModel.databaseErrorProperty().setValue(false);
         });
 
     }

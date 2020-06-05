@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import org.jailbreakers.obj.EmailUsedValidator;
@@ -15,6 +16,23 @@ import org.jailbreakers.ui.dialog.AlertDialog;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+/**
+ * <h1>View of {@link RegisterViewModel} which handles GUI in {@link Layout#REGISTER} layout.</h1>
+ * There is no database connection held since it is the job of ViewModel.<br>
+ * Class uses validators in FXML layout file and checks for problems.<br>
+ * Validators automatically show on error. See the fields in FXML document of {@link Layout#REGISTER} layout.<br>
+ * Class implements {@link Initializable} interface from JavaFx package which allows initialization of view.<br>
+ *
+ * @see RegisterViewModel
+ * @see StageHandler
+ * @see AlertDialog
+ * @see Layout
+ * @see Initializable
+ * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
+ * @version 1.0
+ * @since 1.6.2020
+ */
 
 public class RegisterController implements Initializable {
     @FXML
@@ -31,11 +49,12 @@ public class RegisterController implements Initializable {
     private Button backButton;
 
     /**
-     * After initialization of class sets listeners on buttons.
-     * {@link #registerButton} action event first validates every input and then calls {@code .register} method with given credentials
-     * {@link #backButton} action event navigates back to login screen.
-     * When error happens during registration {@link AlertDialog} dialog is created and displayed.
-     * When registration is successful user is navigated to main screen.
+     * After initialization of class sets listeners on buttons.<br>
+     * {@link #registerButton} action event first validates every input and then calls {@link RegisterViewModel#register} method with given credentials.<br>
+     * {@link #backButton} action event navigates back to login screen.<br>
+     * When error happens during registration {@link AlertDialog} dialog is created and displayed.<br>
+     * When registration is successful user is navigated to {@link Layout#MAIN} layout.<br>
+     * Observers bound to values in ViewModel are handled here.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +104,11 @@ public class RegisterController implements Initializable {
             }
         });
     }
+
+    /**
+     * Method checks if there is any active validator on required fields and returns if there are errors.
+     * @return true if there are no errors and vice versa.
+     */
 
     private boolean noErrors() {
         return usernameField.getActiveValidator() != null ||

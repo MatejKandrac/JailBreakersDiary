@@ -1,14 +1,12 @@
 package org.jailbreakers.ui.splash;
 
 import javafx.animation.PauseTransition;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import org.jailbreakers.obj.DatabaseController;
 import org.jailbreakers.obj.Layout;
 import org.jailbreakers.obj.StageHandler;
 
@@ -17,15 +15,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * <h1>View of {@link SplashViewModel} class which shows data from ViewModel to User and handles simple tasks.</h1>
+ * <h1>View of {@link SplashViewModel} which handles GUI in {@link Layout#LOGIN} layout.</h1>
  * It does not operate with database since it is the job of ViewModel, but handles simple tasks and calls
  * corresponding method in ViewModel.<br>
+ * Class implements {@link Initializable} interface from JavaFx package which allows initialization of view.<br>
  *
- * @see DatabaseController
  * @see SplashController
- * @see SimpleStringProperty
  * @see StageHandler
  * @see Layout
+ * @see Initializable
  * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
  * @version 1.0
  * @since 1.6.2020
