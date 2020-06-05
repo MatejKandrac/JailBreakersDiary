@@ -3,7 +3,7 @@ package org.jailbreakers.obj;
 import java.net.URL;
 
 /**
- * Enum that holds resource paths for every screen and resources and provides them by custom name.
+ * <h1>Enum that holds resource paths for every screen and resources and provides them by custom name.</h1>
  */
 public enum Layout {
     SPLASH, LOGIN, MAIN, REGISTER, DIALOG, DATE_PICKER, LIST_PICKER, STAGE_TOP;
