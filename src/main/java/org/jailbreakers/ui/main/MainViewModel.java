@@ -15,6 +15,9 @@ import java.sql.SQLException;
  * method downloads note from database by date.<br>
  * Integrated interface {@link NoteEventListener} is used for returning downloaded note from {@link DatabaseController}.
  *
+ * @see DatabaseController
+ * @see RegisterController
+ * @see SimpleBooleanProperty
  * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
  * @version 1.0
  * @since 1.6.2020

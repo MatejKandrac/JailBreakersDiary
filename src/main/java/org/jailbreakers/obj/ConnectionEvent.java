@@ -2,7 +2,7 @@ package org.jailbreakers.obj;
 
 public interface ConnectionEvent {
 
-    public void onConnect();
-    public void onConnectionError(String message);
+    void onConnect();
+    void onConnectionError(String message);
 
 }
