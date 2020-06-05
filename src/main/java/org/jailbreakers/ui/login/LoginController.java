@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-public class LoginController implements Initializable{
+public class LoginController implements Initializable {
 
     @FXML
     private Button registerButton;
@@ -33,6 +33,14 @@ public class LoginController implements Initializable{
     @FXML
     private Label errorLabel;
 
+    /**
+     * After initialization of class sets listeners on buttons.<br>
+     * {@link #loginButton} action event first validates every input and then calls {@link LoginViewModel#login} method with given credentials. <br>
+     * {@link #registerButton} action event navigates user to registration screen. <br>
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         LoginViewModel viewModel = new LoginViewModel();
