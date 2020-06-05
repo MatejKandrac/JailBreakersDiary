@@ -30,6 +30,14 @@ public class StageHandler {
         return instance;
     }
 
+    /**
+     * <h1>Loads/sets given layout.</h1>
+     * Checks if layout has root {@link BorderPane} and if so, replaces StageTop.
+     *
+     * @param layout is layout resource file path
+     * @throws IOException
+     */
+
     public void setScene(Layout layout) throws IOException {
         URL resPath = layout.getResourceByLayout();
         FXMLLoader loader = new FXMLLoader(resPath);
