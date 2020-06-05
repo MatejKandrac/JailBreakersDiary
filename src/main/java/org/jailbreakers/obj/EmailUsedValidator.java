@@ -10,7 +10,7 @@ public class EmailUsedValidator extends ValidatorBase {
     public static boolean isEmailUsed = false;
 
     /**
-     * Validates if email was already used using {@link #ValidatorBase} class.
+     * <h1>Validates if email was already used using {@link #ValidatorBase} class.</h1>
      */
 
     @Override

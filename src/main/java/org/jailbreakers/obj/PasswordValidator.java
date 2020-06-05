@@ -11,7 +11,7 @@ public class PasswordValidator extends ValidatorBase {
     public static String passwordText;
 
     /**
-     * Validates passwords using {@link #ValidatorBase} class.
+     * <h1>Validates passwords using {@link #ValidatorBase} class.</h1>
      * When passwords doesn't match or password is less than 5 characters long {@link #hasErrors} property is set to true.
      */
     @Override

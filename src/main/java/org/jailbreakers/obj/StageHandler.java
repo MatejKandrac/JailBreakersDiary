@@ -60,19 +60,21 @@ public class StageHandler {
     }
 
     /**
-     * Sets stage's position when moved.
+     * <h1>Sets stage's position when moved.</h1>
      *
      * @param x is x coordinate of stage
      * @param y is x coordinate of stage
      */
+
     public void setStagePosition(double x, double y) {
         stage.setX(x);
         stage.setY(y);
     }
 
     /**
-     * Minimizes stage/window.
+     * <h1>Minimizes stage/window.</h1>
      */
+
     public void setMinimized() {
         stage.setIconified(true);
     }

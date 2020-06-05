@@ -40,6 +40,14 @@ public class DatabaseController {
         return instance;
     }
 
+    /**
+     * <h1>Opens connection to a database.</h1>
+     * Method creates a new connection to a MySQL database with given credentials.<br>
+     * Connection is created in separate thread.
+     *
+     * @param event
+     */
+
     public void connect(ConnectionEvent event) {
         connectingThread = new Thread(() -> {
             try {
@@ -58,6 +66,18 @@ public class DatabaseController {
         connectingThread.setDaemon(true);
         connectingThread.start();
     }
+
+    /**
+     * <h1>Logs existing user in.</h1>
+     * Note that exceptions are not handled in method and are instead thrown.<br>
+     * <p>Method creates a Statement and executes a simple sql query.
+     * Password is encrypted with md5 encryption method integrated in MySQL language.</p>
+     *
+     * @param email is an email address of registered user
+     * @param pass  is a password of registered user
+     * @throws SQLException          is thrown during login if sql connection happens to fail
+     * @throws IllegalStateException
+     */
 
     public void login(String email, String pass) throws SQLException, IllegalStateException {
         Statement stm = connection.createStatement();
@@ -106,6 +126,13 @@ public class DatabaseController {
         login(email, pass);
     }
 
+    /**
+     * idk really
+     *
+     * @param date
+     * @param event
+     * @throws SQLException
+     */
     public void fetchNoteByDate(String date, NoteFetchEvent event) throws SQLException {
         Statement statement = connection.createStatement();
         String sql = "select * from notes where id_user = '" + loggedUserUuid + "' and date = '" + date + "'";
