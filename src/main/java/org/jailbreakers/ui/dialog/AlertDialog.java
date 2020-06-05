@@ -36,7 +36,7 @@ public class AlertDialog extends VBox{
     private static final int NEUTRAL_BUTTON = 0;
 
     /**
-     * <h1>If connection with database fails, this class will create pop-up window, that informs user with failure</h1>
+     * <h1>If connection with database fails, this class will create pop-up window, that informs user with the failure</h1>
      */
     public AlertDialog(Window window){
         this.ownerStage = (Stage) window;
