@@ -13,8 +13,8 @@ import java.sql.*;
  * was created. This method ensures that any other class can get an instance of only one {@link #connection}.<br>
  * Class has only one Connection object which is used until closed with {@link #abortConnection()} method.<br>
  * <p>
- * {@link #connectingThread} , {@link #loggingInThread} and {@link #registerThread} threads are threads which handle
- * asynchronous events of database. In our case login, register and connect. Threads are canceled if {@link #abortConnection()}
+ * {@link #connectingThread} threads is a thread which handles
+ * asynchronous event of database, connect. Thread is canceled if {@link #abortConnection()}
  * method is called.</p>
  *
  * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
@@ -28,9 +28,6 @@ public class DatabaseController {
 
     private Connection connection;
     private Thread connectingThread;
-    private Thread loggingInThread;
-    private Thread registerThread;
-    public User user;
     private String loggedUserUuid;
     private String currentNoteUuid;
 

@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 /**
- * <p><code>Main</code> class starts Javafx application and shows its first window.<br>
+ * <h1>Main class starts Javafx application and shows its first window.</h1>
  * Main class ensures the window will be opened via {@link #start(Stage)}
  * method which is inherited from Javafx {@link Application} class.<br>
  * Class loads font which is used in .css files of application.<br>
  * {@link StageHandler} class is used to load and show the layout to user.
- * </p>
+ *
  * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
  * @version 1.0
  * @since 1.6.2020

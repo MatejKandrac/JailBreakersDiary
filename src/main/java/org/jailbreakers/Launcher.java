@@ -1,7 +1,7 @@
 package org.jailbreakers;
 
 /**
- * <code>Launcher</code> class starts main program flow.
+ * <h1>Launcher class starts main program flow.</h1>
  *
  * <p>Class is used as a workaround the bug in Javafx where JAR files wont start after build.<br>
  * {@link #main(String[])} is the only method which starts main program in class {@link Main#main(String[])}

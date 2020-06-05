@@ -36,9 +36,6 @@ public class RegisterController implements Initializable {
      * {@link #backButton} action event navigates back to login screen.
      * When error happens during registration {@link AlertDialog} dialog is created and displayed.
      * When registration is successful user is navigated to main screen.
-     *
-     * @param location
-     * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
