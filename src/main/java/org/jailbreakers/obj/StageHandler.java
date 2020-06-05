@@ -9,7 +9,18 @@ import javafx.stage.Stage;
 import org.jailbreakers.ui.datepicker.DatePickerController;
 
 import java.io.IOException;
-import java.net.URL;
+
+/**
+ * <h1>Singleton class handling stage events as well as sharing listener of date picker.</h1>
+ * Class holds an instance of itself. More about singleton classes can be read in DatabaseController JavaDoc.<br>
+ * It also has instance of primary stage {@link #stage} and date picker event listener.<br>
+ * @see Layout
+ * @see org.jailbreakers.ui.stagetop.StageTopController
+ * @see DatePickerController
+ * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
+ * @version 1.0
+ * @since 1.6.202
+ */
 
 public class StageHandler {
 
@@ -17,12 +28,26 @@ public class StageHandler {
     private static StageHandler instance;
     private DatePickerController.OnDatePickedListener onDatePickedListener;
 
+    /**
+     * Empty private constructor to ensure no duplicate instance creation
+     */
+
     private StageHandler() {
     }
+
+    /**
+     * Setter for primary stage
+     * @param stage is a primary stage of application.
+     */
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    /**
+     * Getter of singleton class instance.
+     * @return instance of single class
+     */
 
     public static StageHandler getInstance() {
         if (instance == null)
@@ -30,9 +55,20 @@ public class StageHandler {
         return instance;
     }
 
+    /**
+     * Sets scene to desired layout.<br>
+     * It loads scene via FXMLLoader and checks for id placeholders.<br>
+     * If root is BorderPane, it looks for a child with an id of stageTop<br>
+     * That child is a placeholder of StageTop so it will get replaced by {@link org.jailbreakers.ui.stagetop.StageTopController}.<br>
+     * Same placeholder is for datepicker but it also is under parent with id left side.<br>
+     * If datepicker placeholder is found, it will get replaced by {@link DatePickerController}.<br>
+     * In the end layout is updated to stage.
+     * @param layout is layout to be shown
+     * @throws IOException if there is an error when loading layout
+     */
+
     public void setScene(Layout layout) throws IOException {
-        URL resPath = layout.getResourceByLayout();
-        FXMLLoader loader = new FXMLLoader(resPath);
+        FXMLLoader loader = new FXMLLoader(layout.getResourceByLayout());
         Scene scene = new Scene(loader.load());
         if (scene.getRoot() instanceof BorderPane) {
             BorderPane root = (BorderPane) scene.getRoot();
@@ -79,14 +115,27 @@ public class StageHandler {
         stage.setIconified(true);
     }
 
-
+    /**
+     *
+     * @return property of stage width.
+     */
     public ReadOnlyDoubleProperty getStageWidthProperty() {
         return stage.widthProperty();
     }
 
+    /**
+     * Getter of date selection listener.
+     * @return listener of date selection
+     */
+
     public DatePickerController.OnDatePickedListener getOnDatePickedListener() {
         return onDatePickedListener;
     }
+
+    /**
+     * Setter of date selection listener
+     * @param onDatePickedListener listener of date selection
+     */
 
     public void setOnDatePickedListener(DatePickerController.OnDatePickedListener onDatePickedListener) {
         this.onDatePickedListener = onDatePickedListener;

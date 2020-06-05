@@ -16,6 +16,19 @@ import java.util.*;
 import org.jailbreakers.obj.StageHandler;
 import org.jailbreakers.ui.listpicker.*;
 
+/**
+ * <h1>DatePicker where user can pick a date but only until today.</h1>
+ * DatePicker also uses {@link ListPicker} when choosing year or month manually.<br>
+ *
+ * @see ListPicker
+ * @see DayItem.OnDaySelected
+ * @see org.jailbreakers.obj.Layout
+ * @see Initializable
+ * @author JailBreakersTeam (Matej Kandráč, Martin Ragan, Ján Kočíš)
+ * @version 1.0
+ * @since 1.6.202
+ */
+
 public class DatePickerController implements Initializable, DayItem.OnDaySelected {
 
     @FXML
@@ -39,14 +52,38 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
     @FXML
     private GridPane daysLayout;
 
+    /**
+     * ListPicker used when picking month or year.
+     */
     private ListPicker listPicker;
+    /**
+     * Saved DatePicker parent when switching to listPicker view.
+     */
     private VBox dateParent;
+    /**
+     * Calendar instance which holds information about today.
+     */
     private final Calendar calendar = Calendar.getInstance();
+    /**
+     * Constant array holding names of months.
+     */
     public static final String[] monthNames = new String[]
             {"January", "February", "March", "April", "May", "June", "July",
                     "August", "September", "October", "November", "December"};
+    /**
+     * Variables with shown key word are currently shown on screen but current key word means selected date.
+     */
     private int currentMonth, currentYear, currentDay, shownMonth, shownYear;
 
+    /**
+     * Initializes all necessary events.<br>
+     * It saves parent of DatePicker because it would get lost if switching to ListPicker.<br>
+     * It also sets current year without updating view because they will get updated right after setting month
+     * to current month.<br>
+     * If user chooses to switch to new year, {@link ListPicker} is created with year values.<br>
+     * Same goes for months except months cannot be set to future months.<br>
+     * Month next and previous buttons set current month up or down.<br>
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dateParent = pickerParent;
@@ -104,6 +141,14 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         monthNext.setOnAction(event -> setMonth(shownMonth + 1));
     }
 
+    /**
+     * Method sets new month and updates visible days.<br>
+     * It also handles next and previous year calls.<br>
+     * Method also sets text of selected month to its name.<br>
+     * If current month is today's month and today's year, next button is disabled to ensure no future days will be shown.<br>
+     * @param month index of month in range 0-11
+     */
+
     private void setMonth(int month) {
         if (month == -1) {
             setYear(shownYear - 1, false);
@@ -119,6 +164,15 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         updateDays();
     }
 
+    /**
+     * Method updates selected year.<br>
+     * It sets the text of selected year to corresponding value and if year is not today's year, next month button is
+     * enabled.<br>
+     * If next year is selected and month is selected to future month, it automatically sets month to today.
+     * @param year is year to be selected
+     * @param updateDays means if you want or dont want to update visible days after switching year
+     */
+
     private void setYear(int year, boolean updateDays) {
         shownYear = year;
         yearPicker.setText(String.valueOf(shownYear));
@@ -129,6 +183,13 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         else if (updateDays)
             updateDays();
     }
+
+    /**
+     * Sets the day to the one we want.<br>
+     * Method updates selected date and notifies listener that new day was selected.<br>
+     * It also deselects day if it is active to ensure that only one day will be selected.
+     * @param day is selected day
+     */
 
     private void setDay(int day) {
         currentDay = day;
@@ -145,6 +206,23 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         }
     }
 
+    /**
+     * Method updates visible days to user.<br>
+     * First off id clears children which are shown now but ignores first seven because these are month names
+     * (mo, tu, we....).
+     * Since it is a different thread, {@link Platform#runLater(Runnable)} must handle view changes.<br>
+     * Using {@link YearMonth} class we calculate number of days in past and current month.<br>
+     * {@link Calendar} class is used to determine which day is the first day of month.<br>
+     * {@link Calendar#DAY_OF_WEEK} returns position of day in week but as follows: sunday - 1 monday - 2 tuesday - 3, so
+     * we calculate number of days from past month to show by simple equation.<br>
+     * Example: if first day of month is sunday: 7 - abs(1 - 2) = 6<br>
+     * First children to be added are the ones from past month, that's what dayOffset (number of days from past month) is.<br>
+     * If day to be added is selected date, it creates the day with SELECTABLE attribute and is set as current.<br>
+     * All days in month which were in the past are considered SELECTABLE but not current.<br>
+     * All other days in month are UNSELECTABLE.<br>
+     * Last days are ones from next month.<br>
+     */
+
     private void updateDays() {
         if (daysLayout.getChildren().size() > 7)
             daysLayout.getChildren().remove(7, daysLayout.getChildren().size());
@@ -155,6 +233,7 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
             firstDay.set(Calendar.DAY_OF_MONTH, 1);
             firstDay.set(Calendar.MONTH, shownMonth);
             firstDay.set(Calendar.YEAR, shownYear);
+            System.out.println(firstDay.get(Calendar.DAY_OF_WEEK));
             int dayOffset = (firstDay.get(Calendar.DAY_OF_WEEK) - 2) > 1 ?
                     (firstDay.get(Calendar.DAY_OF_WEEK) - 2) :
                     7 - Math.abs(firstDay.get(Calendar.DAY_OF_WEEK) - 2);
@@ -189,10 +268,19 @@ public class DatePickerController implements Initializable, DayItem.OnDaySelecte
         th.start();
     }
 
+    /**
+     * Method gets called from {@link DayItem} when it is clicked.
+     * @param positionInMonth is position of selected day in month
+     */
+
     @Override
     public void onDaySelected(int positionInMonth) {
         setDay(positionInMonth);
     }
+
+    /**
+     * Interface used for handling date pick event.
+     */
 
     public interface OnDatePickedListener {
         void onDatePicked(int year, int month, int day);
